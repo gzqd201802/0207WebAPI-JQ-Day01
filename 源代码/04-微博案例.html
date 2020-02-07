@@ -182,11 +182,11 @@
     const weiboList = document.querySelector('.weibo-list');
 
 
-    // 封装一个渲染微博列表的函数
+    // 封装一个渲染微博列表的函数!!!!!
     function renderList() {
         // 1. 先获取本地存储数据
         let data = getData('weibo');
-        // 2. 根据本地存储数据渲染列表
+        // 2. 根据本地存储数据映射成新的数组
         let weiboHTMLStr = data.map((item, index) => {
             return `
                 <li>
@@ -220,10 +220,23 @@
             saveData('weibo', data);
             // 更新成功后清空文本域内容
             weiboText.value = '';
-            // 重新渲染列表
+            // 调用函数，重新渲染微博列表
             renderList();
         }
     });
+
+
+    // 删除微博数据
+    function delData(index){
+        // 先获取本地存储数据
+        let data = getData('weibo');
+        // 根据索引值删除一条数据
+        data.splice(index,1);
+        // 重新保存到本地存储
+        saveData('weibo', data);
+        // 调用函数，重新渲染微博列表
+        renderList();
+    }
 
 
 </script>

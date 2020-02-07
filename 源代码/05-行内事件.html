@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <!-- 点击的时候调用delData，通过参数删除对应点击的数据 -->
+        <!-- <li onclick="delData(0)">刘备</li>
+        <li onclick="delData(1)">关羽</li>        
+        <li onclick="delData(2)">张飞</li>         -->
+    </ul>
+    <script>
+        let arr = ['刘备','关羽','张飞'];
+        // arr.map((ite));
+
+        // 把数组映射成 <li> 节点，再写入到 ul 中
+        document.querySelector('ul').innerHTML = arr.map((item,index)=>{
+            return `<li onclick="delData(${index})">${item}</li>`
+        }).join('');
+
+        function delData(index){
+            alert(`你点击了索引值为${index}的这条数据`);
+        }
+    </script>
+</body>
+</html>
