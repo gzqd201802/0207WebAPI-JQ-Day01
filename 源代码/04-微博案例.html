@@ -238,11 +238,30 @@
         renderList();
     }
 
+    // 点击微博列表的 p 标签实现内容编辑
     function edit(index) {
         // alert('当前点击元素的索引值为'+index);
         // console.dir(this);      // 行内事件的 this 指向了 window
         let p = document.querySelector(`#p-${index}`);
-        console.log(p);
+        // console.dir(p);
+        // contentEditable 属性可以把标签编程可编辑状态
+        p.contentEditable = true;
+        // 获取焦点，用户直接编辑
+        p.focus();
+        // 失去焦点的时候更新本地存储的数据
+        p.addEventListener('blur',function () { 
+            // 获取当前 p 标签的最新内容
+            let newContent = p.innerHTML;
+            // 先获取本地存储数据
+            let data = getData('weibo');
+            // 根据索引值修改数组数据
+            data[index] = {
+                content: newContent,
+                time: +new Date()
+            };
+            // 把编辑后的数据重新保存到本地存储
+            saveData('weibo',data);
+        });
     }
 
 </script>
