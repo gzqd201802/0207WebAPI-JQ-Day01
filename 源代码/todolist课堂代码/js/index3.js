@@ -126,18 +126,3 @@ function update(index, status){
 }
 
 // update(1, true);     // 这个是测试用的代码，真正调用时点击时候调用
-
-
-// 根据索引值删除数据
-function delData(index){
-    // 1. 获取本地存储数据
-    let data = getData('todo');
-    // 2. 根据索引值删除掉数组的某条数据
-    data.splice(index,1);
-    // 3. 重新把数组保存到本地存储
-    saveData('todo',data);
-    // 4. 页面列表需要更新
-    renderList();
-}
-
-// delData(0);  // 这个是测试用的代码，真正调用是在页面的行内事件调用
