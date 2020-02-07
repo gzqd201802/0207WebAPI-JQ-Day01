@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>微博发布效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .weibo {
+            width: 600px;
+            border: 1px solid #ccc;
+
+            margin: 100px auto;
+            padding: 10px;
+
+        }
+
+        .weibo-text {
+            width: 590px;
+            height: 140px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+            resize: none;
+        }
+
+        .weibo-text:focus {
+            border-color: #f60;
+        }
+
+        .weibo-btn {
+            width: 80px;
+            height: 30px;
+            background-color: #f90;
+            color: #fff;
+            border: 0 none;
+            margin-top: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            outline: 0 none;
+        }
+
+        .weibo-list {
+            padding-top: 10px;
+        }
+
+        .weibo-list li {
+            font-size: 14px;
+            line-height: 30px;
+            border-bottom: 1px dotted #ccc;
+            overflow: hidden;
+        }
+
+        .weibo-list li p {
+            float: left;
+        }
+
+        .weibo-list li span {
+            float: right;
+            cursor: pointer;
+        }
+
+        .weibo-list li input {
+            height: 24px;
+            line-height: 24px;
+            width: 300px;
+            font-size: 14px;
+            border: 0 none;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="clearData()">清空本地存储</button>
+    <div class="weibo">
+        <textarea class="weibo-text"></textarea>
+        <input class="weibo-btn" value="发布" type="button">
+        <ul class="weibo-list">
+            <!-- 
+            <li>
+                <p>快来收了这九款用上就停不下来的应用吧！！</p>
+                <span>删除</span>
+            </li>
+            <li>
+                <p>超级详细的云南大理自助游攻略</p>
+                <span>删除</span>
+            </li>
+            <li>
+                <p>外国最近很火的舞蹈，舒服简单自然，太棒了！</p>
+                <span>删除</span>
+            </li>
+        -->
+        </ul>
+    </div>
+</body>
+
+</html>
+<script>
+    // 清空数据
+    function clearData() {
+        localStorage.clear();
+        // 重新根据本地存储渲染微博列表
+        renderList();
+    }
+
+    // 保存数据
+    function saveData(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    // 获取数据
+    function getData(key) {
+        return JSON.parse(localStorage.getItem(key)) || [];
+    }
+
+    // let result = getData('weibo');
+    // console.log(result);
+
+    // 根据索引值更新数据 - 重点!!!
+    function upData(index, value) {
+        // 1. 获取数据
+        let data = getData('weibo');  // data 是数组格式
+        // 有数据，才更新数据
+        if (data[index]) {
+            // 2. 根据索引值修改对应的数据
+            data[index] = {
+                content: value,
+                time: +new Date()
+            };
+            // 3. 把数据保存到本地存储中，实现数据更新
+            saveData('weibo', data);
+        }
+    }
+    // upData(0,'新微博内容3');
+
+    // 根据索引值删除数据
+    function removeData(index) {
+        // 1. 获取数据
+        let data = getData('weibo');
+        // 2. 删除索引值对应数据，splice(索引值, 删除个数)
+        data.splice(index, 1);
+        // 3. 把数据保存到本地存储中，实现数据更新
+        saveData('weibo', data);
+    }
+</script>
+<script>
+    /*
+      微博的效果：
+        1 点击发布，会创建一个新的li
+        2 点击删除，可以把某一条微博移除
+    */
+    /*
+      步骤：
+        1 获取元素
+        2 注册事件 - 点击
+        3 点击事件里面，
+          3.1 获取文本域的内容
+          3.2 创建个新的li，把文本域的内容作为li的内容
+          3.3 把新建的li放到ul的最前面
+          3.4 把文本域里面清空
+    
+        4 点击删除
+            把点击的元素所对应的li移除 - removeChild
+            4.1 给所有的删除按钮，注册点击事件
+            4.2 找到删除按钮对应的li调用removeChild方法移除li
+    
+        5 希望可以使用快捷键的方式实现发布
+            ctrl + 回车  发布
+            判断有没有按下ctrl+回车
+            5.1 给文本域注册键盘按下事件
+            5.2 判断按下的是否是回车+ctrl
+                如果满足条件，就发布
+    */
+
+    const weiboBtn = document.querySelector('.weibo-btn');
+    const weiboText = document.querySelector('.weibo-text');
+    const weiboList = document.querySelector('.weibo-list');
+
+
+    // 封装一个渲染微博列表的函数
+    function renderList() {
+        // 1. 先获取本地存储数据
+        let data = getData('weibo');
+        // 2. 根据本地存储数据渲染列表
+        let weiboHTMLStr = data.map((item, index) => {
+            return `
+                <li>
+                    <p>${item.content}</p>
+                    <span onclick='delData(${index})'>删除</span>
+                </li>
+            `
+        });
+        // 3. 列表内容写入到页面中
+        weiboList.innerHTML = weiboHTMLStr.join('');
+    }
+
+    // 在页面加载完毕的时候，主调调用一下 load 渲染数据
+    window.addEventListener('load', renderList);
+
+    // 点击按钮时候添加一条数据到本地存储
+    weiboBtn.addEventListener('click', function () {
+        let str = weiboText.value.trim();
+
+        if (str === '') {
+            alert('请输入内容');
+        } else {
+            // 先获取本地存储数据
+            let data = getData('weibo');
+            // 前添加一条数据
+            data.unshift({
+                content: str,
+                time: +new Date()
+            });
+            // 重新保存到本地存储
+            saveData('weibo', data);
+            // 更新成功后清空文本域内容
+            weiboText.value = '';
+            // 重新渲染列表
+            renderList();
+        }
+    });
+
+
+</script>

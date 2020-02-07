@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ToDoList</title>
+	<link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+	<header>
+		<section>
+			<form action="javascript:postaction()" id="form">
+				<label for="title">ToDoList</label>
+				<input type="text" id="title" name="title" placeholder="添加ToDo" required="required" autocomplete="off">
+			</form>
+		</section>
+	</header>
+	<section>
+		<h2>正在进行 <span id="todocount">0</span></h2>
+		<ol id="todolist" class="demo-box">
+			<!-- 
+			<li draggable="true"><input type="checkbox" onchange="update(0,'done',true)">
+				<p id="p-0" onclick="edit(0)">待办项</p><a href="javascript:remove(0)">-</a>
+			</li>
+			-->
+		</ol>
+		<h2>已经完成 <span id="donecount">0</span></h2>
+		<ul id="donelist">
+			<!-- 
+			<li draggable="true"><input type="checkbox" onchange="update(1,'done',false)" checked="checked">
+				<p id="p-1" onclick="edit(1)">完成项</p><a href="javascript:remove(1)">-</a>
+			</li>
+			-->
+		</ul>
+	</section>
+	<footer>
+		清除所有缓存 <a href="javascript:clear();">清除</a>
+	</footer>
+
+</body>
+<script src="./js/index.js"></script>
+
+</html>

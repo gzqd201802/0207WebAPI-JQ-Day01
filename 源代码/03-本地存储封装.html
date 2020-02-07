@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+
+        // 清空数据
+        function clearData() {
+            localStorage.clear();
+        }
+
+        // 保存数据
+        function saveData(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+
+        // saveData('weibo',[
+        //     {
+        //         content:'快来收了这九款用上就停不下来的应用吧！！',
+        //         time: +new Date()
+        //     },
+        //     {
+        //         content:'超级详细的云南大理自助游攻略',
+        //         time: +new Date()
+        //     },
+        //     {
+        //         content:'外国最近很火的舞蹈，舒服简单自然，太棒了！',
+        //         time: +new Date()
+        //     },
+        // ]);
+
+
+        // 获取数据
+        function getData(key) {
+            return JSON.parse(localStorage.getItem(key)) || [];
+        }
+
+        // let result = getData('weibo');
+        // console.log(result);
+
+        // 根据索引值更新数据 - 重点!!!
+        function upData(index, value) {
+            // 1. 获取数据
+            let data = getData('weibo');  // data 是数组格式
+            // 有数据，才更新数据
+            if (data[index]) {
+                // 2. 根据索引值修改对应的数据
+                data[index] = {
+                    content: value,
+                    time: +new Date()
+                };
+                // 3. 把数据保存到本地存储中，实现数据更新
+                saveData('weibo', data);
+            }
+        }
+        // upData(0,'新微博内容3');
+
+        // 根据索引值删除数据
+        function removeData(index) {
+            // 1. 获取数据
+            let data = getData('weibo');
+            // 2. 删除索引值对应数据，splice(索引值, 删除个数)
+            data.splice(index, 1);
+            // 3. 把数据保存到本地存储中，实现数据更新
+            saveData('weibo', data);
+        }
+
+        // 传入索引值，删除索引值对应的数据
+        // removeData(0);
+
+
+
+    </script>
+</body>
+
+</html>

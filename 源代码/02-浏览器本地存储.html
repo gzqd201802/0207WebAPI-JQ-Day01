@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        console.log(localStorage);
+
+        // // 获取本地存储数据，并通过 JSON.parse() 转换成对象
+        // let result = JSON.parse(localStorage.getItem('weibo'));
+
+        // console.log(result);
+        
+        // 获取本地存储数据，并通过 JSON.parse() 转换成对象
+        let result = JSON.parse(localStorage.getItem('weibo'));
+
+        // console.log(result);
+        if(result === null){
+            result = [];
+        }else{
+            result.push({
+                content:'内容',
+                time:new Date()
+            });
+        }
+
+        localStorage.setItem('weibo', JSON.stringify(result));
+
+        console.log(result);
+        
+
+    </script>
+</body>
+</html>

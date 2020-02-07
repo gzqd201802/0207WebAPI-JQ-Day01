@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        console.log(localStorage);
+
+        // localStorage.clear();
+
+        // localStorage 本地存储只能保存字符串数据
+
+        // localStorage.setItem('weibo', 666);   // 数据会隐式转换成字符串
+
+        let arr = [
+            {
+                content:'快来收了这九款用上就停不下来的应用吧！！',
+                time: +new Date()
+            },
+            {
+                content:'超级详细的云南大理自助游攻略',
+                time: +new Date()
+            },
+            {
+                content:'外国最近很火的舞蹈，舒服简单自然，太棒了！',
+                time: +new Date()
+            },
+        ];
+    
+        // 数据会隐式转换成字符串，相当于执行了 String()
+        console.log(String(arr));
+
+        // JSON.stringify()  保留对象格式的方式转换成字符串
+        console.log(JSON.stringify(arr));
+        
+        localStorage.setItem('weibo', JSON.stringify(arr));
+
+
+        let result = localStorage.getItem('weibo');
+
+        console.log(result);
+        
+        
+
+
+
+    </script>
+</body>
+</html>
