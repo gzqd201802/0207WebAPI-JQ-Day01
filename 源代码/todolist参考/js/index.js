@@ -37,35 +37,6 @@ function postaction() {
 }
 
 
-// 保存并排序
-function saveSort() {
-    let todolist = document.querySelector("#todolist");
-    let donelist = document.querySelector("#donelist");
-    let ts = todolist.querySelectorAll("p");
-    let ds = donelist.querySelectorAll("p");
-
-    let data = [];
-    // 遍历所有的 todolist 列表内容
-    ts.forEach(item => {
-        let todo = {
-            title: item.innerHTML,
-            done: false
-        };
-        data.unshift(todo);
-    });
-    // 遍历所有的 donelist 列表内容
-    ds.forEach(item => {
-        let todo = {
-            title: item.innerHTML,
-            done: true
-        };
-        data.unshift(todo);
-    });
-    // 更新本地存储数据
-    saveDate(data);
-}
-
-
 // 删除项
 function remove(index) {
     let data = loadData();
