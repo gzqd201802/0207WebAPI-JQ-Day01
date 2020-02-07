@@ -264,4 +264,12 @@
         });
     }
 
+    // 按下Ctrl+Enter的时候也可以发布微博
+    weiboText.addEventListener('keyup',function(e){
+        if(e.keyCode===13 && e.ctrlKey === true){
+            // 通过js主动触发点击事件
+            weiboBtn.click();
+        }
+    });
+
 </script>
