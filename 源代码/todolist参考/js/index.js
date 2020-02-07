@@ -96,7 +96,7 @@ function update(index, key, value) {
 // 编辑项
 function edit(index) {
     load();
-    let p = document.querySelector(`#p-${index}`);
+    let p = this;
     title = p.innerHTML;
     p.innerHTML = `<input id="input-${index}" value="${title}" />`;
     let input = document.querySelector(`#input-${index}`);
@@ -108,7 +108,7 @@ function edit(index) {
             p.innerHTML = title;
             alert('内容不能为空');
         } else {
-            updata(index, 'title', input.value);
+            update(index, 'title', input.value);
         }
     }
 }
@@ -162,8 +162,6 @@ function load() {
 }
 
 // load();
-
 window.addEventListener("load", load);
-window.addEventListener("storage", load);
 
 

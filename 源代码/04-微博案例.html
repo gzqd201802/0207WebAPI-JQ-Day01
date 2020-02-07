@@ -190,7 +190,7 @@
         let weiboHTMLStr = data.map((item, index) => {
             return `
                 <li>
-                    <p>${item.content}</p>
+                    <p onclick='edit(${index})' id='p-${index}'>${item.content}</p>
                     <span onclick='delData(${index})'>删除</span>
                 </li>
             `
@@ -238,5 +238,11 @@
         renderList();
     }
 
+    function edit(index) {
+        // alert('当前点击元素的索引值为'+index);
+        // console.dir(this);      // 行内事件的 this 指向了 window
+        let p = document.querySelector(`#p-${index}`);
+        console.log(p);
+    }
 
 </script>
