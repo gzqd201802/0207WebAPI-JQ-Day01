@@ -77,9 +77,10 @@ function renderList(){
         if(item.done){
             // 根据数组的数据 - 拼接成一个个的 li 节点
             // 拼接完成的列表
+            // onclick="update(${index},false)"  => 点击复选框的时候改成未完成状态 
             doneHTMLStr += `
             <li>
-                <input type="checkbox" onchange="update(${index},false)" checked>
+                <input type="checkbox" onclick="update(${index},false)" checked>
                 <p id="p-${index}" onclick="editData(${index})">${item.title}</p>
                 <a href="javascript:delData(${index})">-</a>
             </li>
@@ -90,7 +91,7 @@ function renderList(){
             // 拼接未完成的列表
             todoHTMLStr += `
             <li>
-                <input type="checkbox" onchange="update(${index},true)">
+                <input type="checkbox" onclick="update(${index},true)">
                 <p id="p-${index}" onclick="editData(${index})">${item.title}</p>
                 <a href="javascript:delData(${index})">-</a>
             </li>
@@ -99,8 +100,6 @@ function renderList(){
             todoCountNum++;
         }
     });
-
-    
 
     // 把拼接的字符串写入到页面的列表中
     todolist.innerHTML = todoHTMLStr;
@@ -112,3 +111,18 @@ function renderList(){
 
 // 浏览器加载完毕的时候主动调用一下 renderList 列表渲染
 window.addEventListener('load', renderList);
+
+
+// 更新本地存储的索引值对应数据的状态
+function update(index, status){
+    // 1. 获取本地存储数据
+    let data = getData('todo');
+    // 2. 根据数组的索引值修改对应的数据
+    data[index].done = status;
+    // 3. 把数据重新保存到本地存储中
+    saveData('todo',data);
+    // 4. 页面列表需要更新
+    renderList();
+}
+
+// update(1, true);     // 这个是测试用的代码，真正调用时点击时候调用
